@@ -35,7 +35,7 @@
     "parse-torrent": "^6.0.0",
     "standard": "*",
     "tape": "^4.0.0",
-    "webtorrent-fixtures": "^1.4.0"
+    "webtorrent-fixtures": "^1.7.0"
   },
   "engines": {
     "node": ">=4"
