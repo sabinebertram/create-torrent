@@ -29,7 +29,7 @@
     "simple-sha1": "^2.0.0"
   },
   "devDependencies": {
-    "brfs": "^2.0.0",
+    "brfs": "^2.0.2",
     "parse-torrent": "^6.0.0",
     "standard": "*",
     "tape": "^4.0.0",
