@@ -45,6 +45,11 @@ const announceList = [
  * @param  {number=} opts.pieceLength
  * @param  {Array.<Array.<string>>=} opts.announceList
  * @param  {Array.<string>=} opts.urlList
+ * @param  {boolean=} opts.paymentRequired
+ * @param  {string=} opts.paymentPointer
+ * @param  {string=} opts.amount
+ * @param  {string=} opts.assetCode
+ * @param  {number=} opts.assetScale
  * @param  {Object=} opts.info
  * @param  {function} cb
  * @return {Buffer} buffer of .torrent file data
@@ -272,6 +277,25 @@ function getPieceList (files, pieceLength, cb) {
   }
 }
 
+function createLicense (opts) {
+  if (opts.paymentPointer === undefined) {
+    throw new Error('No payment pointer specified')
+  } else if (opts.amount === undefined) {
+    throw new Error('No license price (amount) specified')
+  } else if (opts.assetCode === undefined) {
+    throw new Error('No asset code specified')
+  } else if (opts.assetScale === undefined) {
+    throw new Error('No asset scale specified')
+  } else {
+    return {
+      paymentPointer: opts.paymentPointer,
+      amount: opts.amount,
+      assetCode: opts.assetCode,
+      assetScale: opts.assetScale
+    }
+  }
+}
+
 function onFiles (files, opts, cb) {
   let announceList = opts.announceList
 
@@ -317,6 +341,8 @@ function onFiles (files, opts, cb) {
   if (opts.createdBy !== undefined) torrent['created by'] = opts.createdBy
 
   if (opts.private !== undefined) torrent.info.private = Number(opts.private)
+
+  if (opts.paymentRequired !== undefined) torrent.info['license'] = createLicense(opts)
 
   if (opts.info !== undefined) Object.assign(torrent.info, opts.info)
 

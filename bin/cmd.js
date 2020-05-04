@@ -8,7 +8,8 @@ const argv = minimist(process.argv.slice(2), {
     o: 'outfile',
     n: 'name',
     h: 'help',
-    v: 'version'
+    v: 'version',
+    p: 'paymentRequired'
   },
   boolean: [
     'help',
@@ -22,7 +23,12 @@ const argv = minimist(process.argv.slice(2), {
     'comment',
     'createdBy',
     'announce',
-    'urlList'
+    'urlList',
+    'paymentRequired',
+    'paymentPointer',
+    'amount',
+    'assetCode',
+    'assetScale'
   ],
   default: {
     createdBy: 'WebTorrent <https://webtorrent.io>'
@@ -46,7 +52,11 @@ written to stdout.
 --private        Private torrent? [boolean] [default: false]
 --pieceLength    Piece length [number] [default: reasonable length]
 --announce       Tracker url [string] [default: reasonable trackers]
---urlList        Web seed url [string]`
+--urlList        Web seed url [string]
+--paymentPointer Verifier payment pointer [string]
+--amount         License price for the file [string]
+--assetCode      Asset price is denominated in, e.g. USD [string]
+--assetScale     Scale of asset, e.g. 2 [number]`
 
 if (argv.version) {
   console.log(require('../package.json').version)
