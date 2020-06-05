@@ -277,21 +277,21 @@ function getPieceList (files, pieceLength, cb) {
   }
 }
 
-function createLicense (opts) {
-  if (opts.paymentPointer === undefined) {
+function createLicense (license) {
+  if (license.paymentPointer === undefined) {
     throw new Error('No payment pointer specified')
-  } else if (opts.amount === undefined) {
+  } else if (license.amount === undefined) {
     throw new Error('No license price (amount) specified')
-  } else if (opts.asset === undefined) {
+  } else if (license.asset === undefined) {
     throw new Error('No asset code specified')
-  } else if (opts.verifier === undefined) {
+  } else if (license.verifier === undefined) {
     throw new Error('No verifier balance API endpoint specified')
   } else {
     return {
-      paymentPointer: opts.paymentPointer,
-      verifier: opts.verifier,
-      amount: (opts.amount * 1e9).toString(),
-      assetCode: opts.asset,
+      paymentPointer: license.paymentPointer,
+      verifier: license.verifier,
+      amount: (license.amount * 1e9).toString(),
+      assetCode: license.asset,
       assetScale: 9
     }
   }
@@ -356,7 +356,7 @@ function onFiles (files, opts, cb) {
   const pieceLength = opts.pieceLength || calcPieceLength(files.reduce(sumLength, 0))
   torrent.info['piece length'] = pieceLength
 
-  if (opts.paymentRequired !== undefined) torrent.license = createLicense(opts)
+  if (opts.paymentRequired !== undefined) torrent.license = createLicense(opts.license)
 
   getPieceList(files, pieceLength, (err, pieces, torrentLength) => {
     if (err) return cb(err)
